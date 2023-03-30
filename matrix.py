@@ -58,14 +58,10 @@ class Matrix:
             for matrix2_row in range(matrix2.cols):
                 cur = 0
                 for matrix1_element in range(self.cols):
-                    print(self.get_element(r, matrix1_element), matrix2.get_element(matrix1_element, matrix2_row))
-                    print("^", r, matrix2_row, matrix1_element)
                     cur += self.get_element(r, matrix1_element) * matrix2.get_element(matrix1_element, matrix2_row)
                 output.set_element(r, matrix2_row, cur)
-            print("SET")
-                
+
         return output
-        # TODO: IMPLEMENT
 
     def multiply_by_scalar(self, multiplier):
         output = Matrix(self.rows, self.rows, [])
@@ -84,12 +80,12 @@ class Matrix:
     def __rmul__(self, multiplier):
         if isinstance(multiplier, Matrix):
             return multiplier.multiply_by_matrix(self)
-        
+
         return self.multiply_by_scalar(multiplier)
 
     def get_minor(self, row, col):
         output = Matrix(self.rows - 1, self.cols - 1, [])
-        
+
         current_row = 0
         current_col = 0
         for r in range(self.rows):
@@ -144,52 +140,10 @@ class Matrix:
     def inverse(self):
         if self.cols != self.rows:
             raise Exception("Only NxN (square) matrices have an inverse.")
-        
+
         determinant = self.determinant()
 
         if determinant == 0:
             raise Exception("This matrix does not have an inverse as the determinant is 0")
-        
+
         return self.cofactor_matrix().transpose().divide_by_scalar(determinant)
-        
-
-    
-
-a = Matrix(3, 3, [1, 2, 3, 4, 5, 6, 7, 8, 9])
-b = Matrix(3, 3, 
-           [152, 279, 1715,
-           225, 360, 1240,
-           396, 9385, 626])
-c = Matrix(3, 2, [1, 2, 3, 4, 5, 6])
-d = Matrix(3, 3, 
-           [1, 2, 3,
-           0, 4, 5,
-           1, 0, 6])
-e = Matrix(3, 3, 
-           [
-            1, 2, 3,
-            0, 4, 5,
-           1, 0, 6
-           ])
-
-f = Matrix(3, 2, [-1, 2, 0, 3, -4, 1])
-g = Matrix(2, 2, [2, 0, 4, 5])
-h = Matrix(2, 2, [5, -1, -2, 3])
-
-r = Matrix(4, 4, [123, 23, 55, 235,
-           21, 2908, 209883, 123,
-           2983, 34, 2098823, 879234,
-           987534, 987134, 987224, 9478])
-i = Matrix(4, 4, [3] * 16)
-
-
-
-coeff = Matrix(3, 3, [
-               1, 0, 2,
-               -1, 2, 3,
-               1, -1, 0
-               ])
-
-ans = Matrix(3, 1, [6, -5, 6])
-
-print(coeff.inverse() * ans)
