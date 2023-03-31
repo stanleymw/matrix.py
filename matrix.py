@@ -64,7 +64,7 @@ class Matrix:
         return output
 
     def multiply_by_scalar(self, multiplier):
-        output = Matrix(self.rows, self.rows, [])
+        output = Matrix(self.rows, self.cols, [])
 
         for r in range(self.rows):
             for c in range(self.cols):
