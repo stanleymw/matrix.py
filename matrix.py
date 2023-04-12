@@ -3,27 +3,29 @@ class Matrix:
         self.rows = rows
         self.cols = cols
 
-        data_creator = []
-        for i in range(rows):
-            data_creator.append([0]*cols)
-
+        data_creator = [0] * (rows * cols)
         for i, v in enumerate(data):
-            data_creator[i // cols][i % cols] = v
+            row_num = (i // cols)
+            col_num = (i % cols)
+            data_creator[row_num * cols + col_num] = v
 
         self.data = data_creator
 
     # TODO: Add out of bounds checking
     def get_element(self, row_num, col_num):
-        return self.data[row_num][col_num]
+        return self.data[row_num * self.cols + col_num]
 
     # TODO: Add out of bounds checking
     def set_element(self, row_num, col_num, new_value):
-        self.data[row_num][col_num] = new_value
+        self.data[row_num * self.cols + col_num] = new_value
 
     def __str__(self):
         out = ""
-        for a in self.data:
-            out += str(a) + "\n"
+        for r in range(self.rows):
+            for c in range(self.cols):
+                out += str(self.get_element(r, c)) + ", "
+            out += "\n"
+
         return out
 
     def __add__(self, matrix2):
